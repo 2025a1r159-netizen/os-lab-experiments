@@ -1,0 +1,58 @@
+==================== PROGRAM 1: fork() + wait() (basic) ====================
+
+#include <stdio.h>
+#include <sys/wait.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+int main() {
+    pid_t p = fork();
+
+    if(p == 0) {
+        printf("Child working...\n");
+        exit(0);
+    }
+    else {
+        pid_t child_pid = wait(NULL);
+        printf("Child %d reaped successfully!\n", child_pid);
+    }
+
+    return 0;
+}
+
+
+==================== PROGRAM 2: fork() + wait() with PIDs ====================
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+int main() {
+    pid_t p = fork();
+
+    if(p == 0) {
+        printf("Child Running with PID:%d\n", getpid());
+        sleep(0);
+        printf("Child Exiting...\n");
+        exit(0);
+    }
+    else {
+        printf("Parent Waiting for child to terminate...\n");
+        pid_t terminated_pid = wait(NULL);
+        printf("Parent Terminated Child PID:%d\n", terminated_pid);
+    }
+
+    return 0;
+}
+
+
+==================== PROGRAM 3: getpid() ====================
+
+#include <stdio.h>
+#include <unistd.h>
+
+int main() {
+    printf("Current PID:%d\n", getpid());
+    return 0;
+}
