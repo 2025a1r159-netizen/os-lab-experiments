@@ -1,1 +1,263 @@
+Experiment 10 – Process Creation and Termination Using C
+1. Aim
 
+To write and execute a C program that creates a child process using fork(), waits for its termination using wait(), and displays the Process ID (PID) of the terminated child process.
+
+2. Objective
+To understand the concept of process creation in Linux.
+To create a child process using the fork() system call.
+To understand the difference between parent and child processes.
+To use the wait() system call to synchronize the parent and child processes.
+To display the Process ID (PID) of the child process.
+To understand process termination using exit().
+3. Software Requirements
+Operating System: Ubuntu Linux
+Virtualization Software: Oracle VirtualBox
+Programming Language: C
+Compiler: GCC
+Text Editor: GNU Nano
+Terminal: Linux Terminal
+4. Theory
+
+A process is a program that is currently being executed by the operating system. Every process has a unique Process ID (PID), which helps the operating system identify and manage it.
+
+In Linux, a process can create another process using the fork() system call. The process that creates another process is called the parent process, and the newly created process is called the child process.
+
+Important System Calls
+
+1. fork()
+
+Used to create a new child process.
+Returns 0 to the child process.
+Returns the child's PID to the parent process.
+Returns -1 if process creation fails.
+
+2. getpid()
+
+Returns the PID of the currently executing process.
+
+3. sleep()
+
+Suspends the execution of the calling process for a specified number of seconds.
+In this program, sleep(2) pauses the child process for two seconds.
+
+4. wait()
+
+Makes the parent process wait until a child process terminates.
+Returns the PID of the terminated child process.
+Helps prevent zombie processes by collecting the child's termination status.
+
+5. exit()
+
+Terminates the calling process.
+exit(0) indicates successful termination.
+5. Program Code
+
+Create a file named pidcomplete.c and write the following program:
+
+c
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+int main() {
+    pid_t p = fork();
+
+    if (p == 0) {
+        printf("Child Running with PID: %d\n", getpid());
+        sleep(2); // Simulate work
+        printf("Child Exiting...\n");
+        exit(0);
+    }
+    else {
+        printf("Parent Waiting for child to terminate...\n");
+        pid_t terminated_pid = wait(NULL);
+        printf("Parent Terminated Child PID: %d\n", terminated_pid);
+    }
+
+    return 0;
+}
+
+6. Explanation of the Program
+Step 1: Include Header Files
+c
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+
+These header files provide the functions required for input/output, process creation, process termination, and process synchronization.
+
+Step 2: Create a Child Process
+c
+pid_t p = fork();
+
+
+The fork() system call creates a child process. Both parent and child processes continue executing from the statement following fork().
+
+Step 3: Execute the Child Process
+c
+if (p == 0) {
+    printf("Child Running with PID: %d\n", getpid());
+    sleep(2);
+    printf("Child Exiting...\n");
+    exit(0);
+}
+
+
+When p == 0, the child process executes this block.
+
+Displays the child's PID using getpid().
+Waits for two seconds using sleep(2).
+Displays the child termination message.
+Terminates successfully using exit(0).
+Step 4: Execute the Parent Process
+c
+else {
+    printf("Parent Waiting for child to terminate...\n");
+    pid_t terminated_pid = wait(NULL);
+    printf("Parent Terminated Child PID: %d\n", terminated_pid);
+}
+
+
+The parent process executes this block.
+
+Displays a message indicating that it is waiting.
+Calls wait(NULL) to wait for the child process.
+Receives the PID of the terminated child.
+Displays the child's PID.
+Step 5: End the Program
+c
+return 0;
+
+
+Terminates the parent process successfully.
+
+7. Algorithm
+Start the program.
+Include the required header files.
+Call the fork() system call to create a child process.
+Check the return value of fork().
+If the return value is zero:
+Display the child process PID.
+Sleep for two seconds.
+Display the child exiting message.
+Terminate the child using exit(0).
+Otherwise, execute the parent process:
+Display the waiting message.
+Call wait(NULL) to wait for the child.
+Store the terminated child's PID.
+Display the terminated child's PID.
+End the program.
+8. Compilation and Execution
+Step 1: Open the Terminal
+
+Open the Ubuntu terminal in Oracle VirtualBox.
+
+Step 2: Create the C File
+bash
+nano pidcomplete.c
+
+
+Write the program and save it using:
+
+Press Ctrl + O to save.
+Press Enter to confirm.
+Press Ctrl + X to exit Nano.
+Step 3: Compile the Program
+bash
+gcc pidcomplete.c -o pidcomplete
+
+
+This command compiles the C program and creates an executable file named pidcomplete.
+
+Step 4: Execute the Program
+bash
+./pidcomplete
+
+9. Output
+Actual Output Observed in Ubuntu Terminal
+text
+Parent Waiting for child to terminate...
+Child Running with PID: 4402
+Child Exiting...
+Parent Terminated Child PID: 4402
+
+
+Note: The PID 4402 is from the actual execution shown in the lab screenshot. It may be different when the program is executed again.
+
+Explanation of Output
+Parent Waiting for child to terminate...
+
+The parent process displays this message before calling wait().
+
+Child Running with PID: 4402
+
+The child process displays its unique Process ID using getpid().
+
+Child Exiting...
+
+After sleeping for two seconds, the child displays this message and terminates.
+
+Parent Terminated Child PID: 4402
+
+After the child terminates, the parent resumes execution and displays the PID returned by wait().
+
+10. Process Execution Flow
+
+The execution takes place as follows:
+
+text
+             START
+               |
+               |
+          Call fork()
+               |
+         Create Child
+               |
+        +------+------+
+        |             |
+     p == 0        p != 0
+        |             |
+   Child Process  Parent Process
+        |             |
+   Display PID    Display Waiting
+        |             |
+    sleep(2)       wait(NULL)
+        |             |
+   Child Exiting      |
+        |             |
+     exit(0)          |
+        |             |
+        +------+------+
+               |
+       Parent Resumes
+               |
+      Display Child PID
+               |
+              END
+
+11. Important Observations
+The fork() system call successfully creates a child process.
+The parent and child processes execute independently.
+Both processes have different execution paths.
+The child process takes approximately two seconds to complete its simulated work.
+The parent process waits until the child terminates.
+The PID returned by wait() matches the PID displayed by the child.
+The parent does not proceed beyond wait() until the child terminates.
+12. Precautions
+Include all the necessary header files.
+Use the correct syntax for the fork() system call.
+Compile the program before executing it.
+Use wait() to synchronize the parent and child processes.
+Make sure the source filename matches the filename used during compilation.
+Check for errors during compilation and execution.
+13. Result
+
+The C program for process creation and termination was successfully written, compiled, and executed in Ubuntu Linux using Oracle VirtualBox.
+
+The fork() system call successfully created a child process, and the wait() system call made the parent process wait for the child's termination. The PID of the terminated child process was successfully displayed.
+
+Hence, the experiment was successfully completed.
