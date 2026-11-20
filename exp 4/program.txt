@@ -1,1 +1,115 @@
+EXPERIMENT NO. 4
+TITLE: PROCESS MANAGEMENT AND TEXT EDITORS IN LINUX
 
+PROGRAM 1: DISPLAY RUNNING PROCESSES
+
+#!/bin/bash
+
+echo "Displaying running processes:"
+ps
+
+echo ""
+echo "Displaying all processes:"
+ps -ef
+
+
+PROGRAM 2: DISPLAY PROCESS INFORMATION
+
+#!/bin/bash
+
+echo "Current shell process ID:"
+echo $$
+
+echo ""
+echo "Current user:"
+whoami
+
+echo ""
+echo "Running processes:"
+top -b -n 1 | head -n 10
+
+
+PROGRAM 3: RUN A PROCESS IN THE BACKGROUND
+
+#!/bin/bash
+
+echo "Starting a background process..."
+
+sleep 30 &
+
+PID=$!
+
+echo "Background process started."
+echo "Process ID: $PID"
+
+echo ""
+echo "Checking the process:"
+ps -p "$PID"
+
+wait "$PID"
+
+echo "Background process completed."
+
+
+PROGRAM 4: TERMINATE A PROCESS
+
+#!/bin/bash
+
+sleep 100 &
+
+PID=$!
+
+echo "Started sleep process with PID: $PID"
+
+sleep 2
+
+if kill "$PID" 2>/dev/null; then
+    echo "Termination signal sent to process $PID."
+else
+    echo "Process could not be terminated."
+fi
+
+
+PROGRAM 5: VI EDITOR COMMANDS
+
+Open or create a file:
+vi sample.txt
+
+Common commands inside vi:
+
+i       - Enter insert mode
+Esc     - Exit insert mode
+:w      - Save the file
+:q      - Quit the editor
+:wq     - Save and quit
+:q!     - Quit without saving
+
+
+PROGRAM 6: NANO EDITOR COMMANDS
+
+Open or create a file:
+nano sample.txt
+
+Common shortcuts inside nano:
+
+Ctrl + O    - Save the file
+Enter       - Confirm the filename
+Ctrl + X    - Exit the editor
+Ctrl + W    - Search for text
+Ctrl + K    - Cut a line
+Ctrl + U    - Paste a line
+
+
+PROGRAM 7: DISPLAY PROCESS TREE
+
+#!/bin/bash
+
+echo "Displaying process tree:"
+pstree
+
+If pstree is not installed, install it using:
+sudo apt install psmisc
+
+
+RESULT:
+Process management commands and basic operations of vi and nano text editors were studied.
