@@ -1,1 +1,110 @@
+EXPERIMENT NO. 3
+TITLE: I/O REDIRECTION, PIPES AND SED COMMANDS
 
+PROGRAM 1: INPUT AND OUTPUT REDIRECTION
+
+#!/bin/bash
+
+echo "Hello, Operating System" > output.txt
+echo "Welcome to Linux" >> output.txt
+
+echo "Contents of output.txt:"
+cat output.txt
+
+echo "Program executed successfully."
+
+
+PROGRAM 2: USING PIPES
+
+#!/bin/bash
+
+echo "Displaying all files and directories:"
+ls -l
+
+echo ""
+echo "Counting the number of lines:"
+ls -l | wc -l
+
+echo ""
+echo "Displaying only directory names:"
+ls -l | grep "^d"
+
+
+PROGRAM 3: USING SED COMMAND
+
+#!/bin/bash
+
+echo "Linux is easy to learn" > sample.txt
+
+echo "Original text:"
+cat sample.txt
+
+echo ""
+echo "Replacing Linux with Ubuntu:"
+sed 's/Linux/Ubuntu/g' sample.txt
+
+
+PROGRAM 4: SAVE MODIFIED TEXT TO A NEW FILE
+
+#!/bin/bash
+
+echo "Operating System is an important subject" > input.txt
+
+echo "Original file:"
+cat input.txt
+
+sed 's/Operating System/OS/g' input.txt > output.txt
+
+echo ""
+echo "Modified file:"
+cat output.txt
+
+
+PROGRAM 5: DELETE A LINE USING SED
+
+#!/bin/bash
+
+cat > sample.txt <<EOF
+First line
+Second line
+Third line
+Fourth line
+EOF
+
+echo "Original file:"
+cat sample.txt
+
+echo ""
+echo "After deleting the second line:"
+sed '2d' sample.txt
+
+
+PROGRAM 6: DISPLAY SELECTED LINES USING SED
+
+#!/bin/bash
+
+echo "First line
+Second line
+Third line
+Fourth line" > lines.txt
+
+echo "Displaying the second line:"
+sed -n '2p' lines.txt
+
+
+PROGRAM 7: COUNT WORDS USING PIPE
+
+#!/bin/bash
+
+echo "Linux is easy to learn" > words.txt
+
+echo "Original text:"
+cat words.txt
+
+echo ""
+echo "Number of words:"
+cat words.txt | wc -w
+
+
+RESULT:
+I/O redirection, pipes, and sed commands were studied and demonstrated using Bash shell scripts.
