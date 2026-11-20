@@ -1,1 +1,133 @@
+EXPERIMENT NO. 5
+TITLE: SHELL SCRIPTING WITH COMMAND-LINE ARGUMENTS AND FILE MANIPULATION
 
+PROGRAM 1: DISPLAY COMMAND-LINE ARGUMENTS
+
+#!/bin/bash
+
+echo "Script Name: $0"
+echo "First Argument: $1"
+echo "Second Argument: $2"
+echo "Total Number of Arguments: $#"
+echo "All Arguments: $@"
+
+
+PROGRAM 2: IDENTIFY FILE OR DIRECTORY
+
+#!/bin/bash
+
+if [ $# -eq 0 ]; then
+    echo "Usage: $0 <path>"
+    exit 1
+fi
+
+path="$1"
+
+if [ -f "$path" ]; then
+    echo "$path is a regular file."
+elif [ -d "$path" ]; then
+    echo "$path is a directory."
+elif [ -L "$path" ]; then
+    echo "$path is a symbolic link."
+else
+    echo "$path does not exist or is another type of path."
+fi
+
+
+PROGRAM 3: CREATE AND MANIPULATE A FILE
+
+#!/bin/bash
+
+filename="sample.txt"
+
+echo "Creating a file..."
+touch "$filename"
+
+echo "Hello, Linux!" > "$filename"
+echo "This is a shell scripting practical." >> "$filename"
+
+echo "File contents:"
+cat "$filename"
+
+
+PROGRAM 4: COPY AND RENAME A FILE
+
+#!/bin/bash
+
+source="sample.txt"
+destination="backup.txt"
+
+if [ -f "$source" ]; then
+    cp "$source" "$destination"
+    echo "File copied to $destination."
+
+    mv "$destination" "renamed.txt"
+    echo "File renamed to renamed.txt."
+else
+    echo "Source file does not exist."
+fi
+
+
+PROGRAM 5: DISPLAY FILE INFORMATION
+
+#!/bin/bash
+
+if [ $# -eq 0 ]; then
+    echo "Usage: $0 <filename>"
+    exit 1
+fi
+
+filename="$1"
+
+if [ -e "$filename" ]; then
+    echo "File or path exists."
+
+    if [ -r "$filename" ]; then
+        echo "Readable: Yes"
+    else
+        echo "Readable: No"
+    fi
+
+    if [ -w "$filename" ]; then
+        echo "Writable: Yes"
+    else
+        echo "Writable: No"
+    fi
+
+    if [ -x "$filename" ]; then
+        echo "Executable: Yes"
+    else
+        echo "Executable: No"
+    fi
+else
+    echo "File or path does not exist."
+fi
+
+
+PROGRAM 6: RENAME A FILE USING COMMAND-LINE ARGUMENTS
+
+#!/bin/bash
+
+if [ $# -ne 2 ]; then
+    echo "Usage: $0 <old_filename> <new_filename>"
+    exit 1
+fi
+
+oldname="$1"
+newname="$2"
+
+if [ -f "$oldname" ]; then
+    if [ -e "$newname" ]; then
+        echo "Error: Destination already exists."
+        exit 1
+    fi
+
+    mv -- "$oldname" "$newname"
+    echo "File renamed successfully."
+else
+    echo "Error: Source file does not exist."
+fi
+
+
+RESULT:
+Shell scripting with command-line arguments, file identification, file manipulation, and filename renaming was studied.
