@@ -1,1 +1,153 @@
+shell EXPERIMENT NO. 6
+TITLE: USER INFORMATION, LINE EXTRACTION AND TEXT PROCESSING IN LINUX
 
+PROGRAM 1: DISPLAY CURRENT USER INFORMATION
+
+#!/bin/bash
+
+echo "Current Username:"
+whoami
+
+echo ""
+echo "User ID and Group ID:"
+id
+
+echo ""
+echo "Current Login Sessions:"
+who
+
+echo ""
+echo "Current Date and Time:"
+date
+
+
+PROGRAM 2: DISPLAY USER LOGIN HISTORY
+
+#!/bin/bash
+
+echo "Recent Login History:"
+last -n 5
+
+echo ""
+echo "Current User:"
+whoami
+
+
+PROGRAM 3: COUNT LINES, WORDS AND CHARACTERS
+
+#!/bin/bash
+
+filename="sample.txt"
+
+cat > "$filename" <<EOF
+Linux is an operating system.
+Shell scripting is useful.
+Text processing is important.
+EOF
+
+echo "File Contents:"
+cat "$filename"
+
+echo ""
+echo "Number of Lines:"
+wc -l < "$filename"
+
+echo "Number of Words:"
+wc -w < "$filename"
+
+echo "Number of Characters:"
+wc -m < "$filename"
+
+
+PROGRAM 4: EXTRACT A SPECIFIC LINE
+
+#!/bin/bash
+
+filename="sample.txt"
+
+echo "First line:"
+sed -n '1p' "$filename"
+
+echo ""
+echo "Second line:"
+sed -n '2p' "$filename"
+
+echo ""
+echo "Third line:"
+sed -n '3p' "$filename"
+
+
+PROGRAM 5: SEARCH FOR A WORD IN A FILE
+
+#!/bin/bash
+
+filename="sample.txt"
+search_word="Linux"
+
+echo "Searching for the word: $search_word"
+
+if grep -n "$search_word" "$filename"; then
+    echo "Search completed."
+else
+    echo "Word not found."
+fi
+
+
+PROGRAM 6: REPLACE TEXT USING SED
+
+#!/bin/bash
+
+filename="sample.txt"
+
+echo "Original Text:"
+cat "$filename"
+
+echo ""
+echo "Modified Text:"
+sed 's/Linux/Ubuntu/g' "$filename"
+
+
+PROGRAM 7: DISPLAY UNIQUE LINES
+
+#!/bin/bash
+
+cat > duplicate.txt <<EOF
+Apple
+Banana
+Apple
+Mango
+Banana
+Orange
+EOF
+
+echo "Original Lines:"
+cat duplicate.txt
+
+echo ""
+echo "Unique Lines:"
+sort -u duplicate.txt
+
+
+PROGRAM 8: SORT TEXT FILE CONTENTS
+
+#!/bin/bash
+
+filename="fruits.txt"
+
+cat > "$filename" <<EOF
+Mango
+Apple
+Orange
+Banana
+EOF
+
+echo "Original File:"
+cat "$filename"
+
+echo ""
+echo "Sorted File:"
+sort "$filename"
+
+
+RESULT:
+User information commands, line extraction, text searching, word counting, sorting, and text replacement using Linux commands were studied.
