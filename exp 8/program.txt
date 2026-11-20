@@ -1,1 +1,43 @@
+// Experiment 8: Memory Allocation and Memory Usage in C
 
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char *argv[]) {
+    if (argc != 2) {
+        printf("Usage: %s <memory_in_MB>\n", argv[0]);
+        return 1;
+    }
+
+    int mb = atoi(argv[1]);
+
+    if (mb <= 0) {
+        printf("Please enter a positive memory size.\n");
+        return 1;
+    }
+
+    size_t size = (size_t)mb * 1024 * 1024;
+
+    char *ptr = (char *)malloc(size);
+
+    if (ptr == NULL) {
+        printf("Memory allocation failed.\n");
+        return 1;
+    }
+
+    for (size_t i = 0; i < size; i += 4096) {
+        ptr[i] = 0;
+    }
+
+    printf("%d MB memory allocated successfully.\n", mb);
+
+    printf("Press Enter to release memory...");
+    getchar();
+    getchar();
+
+    free(ptr);
+
+    printf("Memory released successfully.\n");
+
+    return 0;
+}
